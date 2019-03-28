@@ -152,7 +152,7 @@ export default class VideoPlayer extends Component {
         };
     }
 
-    componentDidUpdate = prevProps => {
+    componentDidUpdate() {
       const {isFullscreen} = this.props;
 
       if (this.state.isFullscreen !== isFullscreen) {
@@ -697,10 +697,10 @@ export default class VideoPlayer extends Component {
      * To allow basic playback management from the outside
      * we have to handle possible props changes to state changes
      */
-    componentWillReceiveProps(nextProps) {
-        if (this.state.paused !== nextProps.paused ) {
+    componentWillReceiveProps({paused}) {
+        if (this.props.paused !== paused ) {
             this.setState({
-                paused: nextProps.paused
+                paused
             })
         }
     }
