@@ -103,7 +103,9 @@ export default class VideoPlayer extends Component {
             togglePlayPause: this._togglePlayPause.bind( this ),
             toggleControls: this._toggleControls.bind( this ),
             toggleTimer: this._toggleTimer.bind( this ),
-            toggleCC: this._toggleCC.bind(this),
+            toggleCC: this._toggleCC.bind( this ),
+            play: this._play.bind( this ),
+            pause: this._pause.bind( this )
         };
 
         /**
@@ -456,17 +458,30 @@ export default class VideoPlayer extends Component {
      * Toggle playing state on <Video> component
      */
     _togglePlayPause() {
-        let state = this.state;
-        state.paused = !state.paused;
-
-        if (state.paused) {
-            typeof this.events.onPause === 'function' && this.events.onPause();
+        if (this.state.paused) {
+            this.methods.play();
         }
         else {
-            typeof this.events.onPlay === 'function' && this.events.onPlay();
+            this.methods.pause();
         }
+    }
 
-        this.setState( state );
+    /**
+     * Play the app
+     */
+    _play() {
+        typeof this.events.onPlay === 'function' && this.events.onPlay();
+
+        this.setState({ paused: false });
+    }
+
+    /**
+     * Pause the app
+     */
+    _pause() {
+        typeof this.events.onPause === 'function' && this.events.onPause();
+
+        this.setState({ paused: true });
     }
 
     /**
